@@ -1,13 +1,18 @@
+package day2;
+
+import advent.AdventClass;
+
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
-public class Main {
+public class Day2 implements AdventClass {
 
   private static final String INPUT =
       "1640\t590\t93\t958\t73\t1263\t1405\t1363\t737\t712\t1501\t390\t68\t1554\t959\t79\n"
@@ -27,38 +32,48 @@ public class Main {
     + "235\t4935\t4249\t3316\t1202\t221\t1835\t380\t249\t1108\t1922\t5607\t4255\t238\t211\t3973\n"
     + "1738\t207\t179\t137\t226\t907\t1468\t1341\t1582\t1430\t851\t213\t393\t1727\t1389\t632\n";
 
-  public static void main(String[] args) {
-    List<List<Integer>> spreadsheet = readInput(INPUT);
-    int result = calcChecksum(spreadsheet);
-    System.out.printf("Checksum = %d", result);
+  private final List<List<Integer>> lists;
+
+  public Day2() {
+    lists = readInput(INPUT);
   }
 
-  private static List<List<Integer>> readInput(String input) {
+  private List<List<Integer>> readInput(String input) {
     List<String> lines = Arrays.stream(input.split("\n")).collect(Collectors.toList());
-    return lines.stream().map(Main::getLine).collect(Collectors.toList());
+    return lines.stream().map(this::getLine).collect(Collectors.toList());
   }
 
-  private static List<Integer> getLine(String input) {
+  private List<Integer> getLine(String input) {
     return Arrays.stream(input.split("\t"))
                  .mapToInt(Integer::parseInt)
                  .boxed()
                  .collect(Collectors.toList());
   }
 
-  public static int calcChecksum(List<List<Integer>> spreadsheet) {
+  @Override
+  public String printFirst() {
+    return "Checksum with sum = " + calcChecksum(lists, this::calcLinesValuesWithMinMax);
+  }
+
+  @Override
+  public String printSecond() {
+    return "Checksum with div = " + calcChecksum(lists, this::calcLinesValuesWithDivide);
+  }
+
+  private int calcChecksum(List<List<Integer>> spreadsheet, Function<List<Integer>, Integer> method) {
     return spreadsheet.stream()
-                      .map(line -> calcLinesValuesWithDivide(line))
+                      .map(method::apply)
                       .mapToInt(Integer::intValue)
                       .sum();
   }
 
-  private static int calcLinesValuesWithMinMax(List<Integer> integers) {
+  private Integer calcLinesValuesWithMinMax(List<Integer> integers) {
     int min = integers.stream().mapToInt(Integer::intValue).min().getAsInt();
     int max = integers.stream().mapToInt(Integer::intValue).max().getAsInt();
     return max - min;
   }
 
-  private static int calcLinesValuesWithDivide(List<Integer> integers) {
+  private Integer calcLinesValuesWithDivide(List<Integer> integers) {
     for (int i = 0; i < integers.size(); i++) {
       for (int j = i+1; j< integers.size() ; j++) {
         Integer first = integers.get(i);
@@ -72,13 +87,14 @@ public class Main {
     return 0;
   }
 
-
-
   @Test
   public void testCalc() {
-    assertEquals(0, calcChecksum(Arrays.asList(Arrays.asList(1))));
-    assertEquals(1, calcChecksum(Arrays.asList(Arrays.asList(1,2))));
-    assertEquals(2, calcChecksum(Arrays.asList(Arrays.asList(1,2), Arrays.asList(2,3))));
+    assertEquals(0, calcChecksum(Arrays.asList(Arrays.asList(1)),
+                                 this::calcLinesValuesWithMinMax));
+    assertEquals(1, calcChecksum(Arrays.asList(Arrays.asList(1,2)),
+                                 this::calcLinesValuesWithMinMax));
+    assertEquals(2, calcChecksum(Arrays.asList(Arrays.asList(1,2), Arrays.asList(2,3)),
+                                 this::calcLinesValuesWithMinMax));
   }
 
   @Test
@@ -91,14 +107,14 @@ public class Main {
 
   @Test
   public void testLineChecksum(){
-    assertEquals(0, calcLinesValuesWithMinMax(Collections.singletonList(1)));
-    assertEquals(2, calcLinesValuesWithMinMax(Arrays.asList(2, 4)));
-    assertEquals(10, calcLinesValuesWithMinMax(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)));
+    assertEquals(0, (int)calcLinesValuesWithMinMax(Collections.singletonList(1)));
+    assertEquals(2, (int)calcLinesValuesWithMinMax(Arrays.asList(2, 4)));
+    assertEquals(10, (int)calcLinesValuesWithMinMax(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)));
   }
 
   @Test
   public void testLineChecksumWithDiv() {
-    assertEquals(2, calcLinesValuesWithDivide(Arrays.asList(2, 4)));
-    assertEquals(3, calcLinesValuesWithDivide(Arrays.asList(3, 4, 5, 7, 9, 11)));
+    assertEquals(2, (int)calcLinesValuesWithDivide(Arrays.asList(2, 4)));
+    assertEquals(3, (int)calcLinesValuesWithDivide(Arrays.asList(3, 4, 5, 7, 9, 11)));
   }
 }
