@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -48,16 +47,32 @@ public class Main {
 
   public static int calcChecksum(List<List<Integer>> spreadsheet) {
     return spreadsheet.stream()
-                      .map(line -> calcLinesValues(line))
+                      .map(line -> calcLinesValuesWithDivide(line))
                       .mapToInt(Integer::intValue)
                       .sum();
   }
 
-  private static int calcLinesValues(List<Integer> integers) {
+  private static int calcLinesValuesWithMinMax(List<Integer> integers) {
     int min = integers.stream().mapToInt(Integer::intValue).min().getAsInt();
     int max = integers.stream().mapToInt(Integer::intValue).max().getAsInt();
     return max - min;
   }
+
+  private static int calcLinesValuesWithDivide(List<Integer> integers) {
+    for (int i = 0; i < integers.size(); i++) {
+      for (int j = i+1; j< integers.size() ; j++) {
+        Integer first = integers.get(i);
+        Integer second = integers.get(j);
+        if (first % second == 0)
+          return first / second;
+        if (second % first == 0)
+          return second / first;
+      }
+    }
+    return 0;
+  }
+
+
 
   @Test
   public void testCalc() {
@@ -76,8 +91,14 @@ public class Main {
 
   @Test
   public void testLineChecksum(){
-    assertEquals(0, calcLinesValues(Collections.singletonList(1)));
-    assertEquals(2, calcLinesValues(Arrays.asList(2, 4)));
-    assertEquals(10, calcLinesValues(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)));
+    assertEquals(0, calcLinesValuesWithMinMax(Collections.singletonList(1)));
+    assertEquals(2, calcLinesValuesWithMinMax(Arrays.asList(2, 4)));
+    assertEquals(10, calcLinesValuesWithMinMax(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)));
+  }
+
+  @Test
+  public void testLineChecksumWithDiv() {
+    assertEquals(2, calcLinesValuesWithDivide(Arrays.asList(2, 4)));
+    assertEquals(3, calcLinesValuesWithDivide(Arrays.asList(3, 4, 5, 7, 9, 11)));
   }
 }
