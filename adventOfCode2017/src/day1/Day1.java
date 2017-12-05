@@ -16,7 +16,7 @@ public class Day1 implements AdventClass {
 
   @Override
   public String printFirst() {
-    return "Sum with Next= " + calcSum(INPUT, this::getNextChar);
+    return "Sum with next= " + calcSum(INPUT, this::getNextChar);
   }
 
   @Override

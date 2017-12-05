@@ -1,6 +1,7 @@
 import advent.AdventClass;
 import day1.Day1;
 import day2.Day2;
+import day3.Day3;
 
 import org.junit.Test;
 
@@ -14,8 +15,9 @@ import static org.junit.Assert.assertEquals;
 public class Main {
 
   private static final List<AdventClass> adventClasses = Arrays.asList(
-      new Day1(),
-      new Day2()
+      new Day3(),
+      new Day2(),
+      new Day1()
   );
 
   public static void main(String[] args) {
