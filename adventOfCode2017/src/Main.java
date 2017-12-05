@@ -5,14 +5,11 @@ import day3.Day3;
 import day4.Day4;
 import day5.Day5;
 
-import org.junit.Test;
-
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertEquals;
+import java.util.function.Supplier;
 
 public class Main {
 
@@ -25,10 +22,19 @@ public class Main {
   );
 
   public static void main(String[] args) {
+    int i = adventClasses.size();
     adventClasses.forEach(adventClass -> {
-      System.out.println(adventClass.printFirst());
-      System.out.println(adventClass.printSecond());
+      System.out.println(getSolution(adventClass::printFirst));
+      System.out.println(getSolution(adventClass::printSecond));
     });
+  }
+
+  private static String getSolution(Supplier<String> method) {
+    Instant start = Instant.now();
+    String result = method.get();
+    Instant end = Instant.now();
+    Duration duration = Duration.between(start, end);
+    return "Duration:" + duration + "\t\t" + result;
   }
 
 }

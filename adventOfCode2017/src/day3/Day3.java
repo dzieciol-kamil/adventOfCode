@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 
 public class Day3 implements AdventClass {
@@ -22,7 +23,12 @@ public class Day3 implements AdventClass {
 
   @Override
   public String printSecond() {
-    return "second";
+    try {
+      sleep(1);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    return "Shortest path steps count with AOIE";
   }
 
   private int calcSteps(int input, Function<Integer, List<List<Integer>>> generator) {
