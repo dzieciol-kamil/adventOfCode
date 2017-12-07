@@ -5,6 +5,7 @@ import day3.Day3;
 import day4.Day4;
 import day5.Day5;
 import day6.Day6;
+import day7.Day7;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -15,6 +16,7 @@ import java.util.function.Supplier;
 public class Main {
 
   private static final List<AdventClass> adventClasses = Arrays.asList(
+      new Day7(),
       new Day6(),
       new Day5(),
       new Day4(),
@@ -25,10 +27,13 @@ public class Main {
 
   public static void main(String[] args) {
     int i = adventClasses.size();
-    adventClasses.forEach(adventClass -> {
+    for (AdventClass adventClass : adventClasses) {
+      System.out.println(String.format("Day %d", i));
       System.out.println(getSolution(adventClass::printFirst));
       System.out.println(getSolution(adventClass::printSecond));
-    });
+      System.out.println();
+      i--;
+    }
   }
 
   private static String getSolution(Supplier<String> method) {
@@ -36,7 +41,7 @@ public class Main {
     String result = method.get();
     Instant end = Instant.now();
     Duration duration = Duration.between(start, end);
-    return "Duration:" + duration + "\t\t" + result;
+    return String.format("%s\nDuration: %s", result, duration);
   }
 
 }
