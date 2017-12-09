@@ -7,6 +7,7 @@ import day5.Day5;
 import day6.Day6;
 import day7.Day7;
 import day8.Day8;
+import day9.Day9;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -17,6 +18,7 @@ import java.util.function.Supplier;
 public class Main {
 
   private static final List<AdventClass> adventClasses = Arrays.asList(
+      new Day9(),
       new Day8(),
       new Day7(),
       new Day6(),
