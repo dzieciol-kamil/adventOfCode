@@ -3,7 +3,7 @@ package day8;
 import java.util.Map;
 import java.util.Objects;
 
-class Condition {
+public class Condition {
   private final String registry;
   private final ConditionType type;
   private final int value;

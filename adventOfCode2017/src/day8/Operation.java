@@ -3,7 +3,7 @@ package day8;
 import java.util.Map;
 import java.util.Objects;
 
-class Operation {
+public class Operation {
 
   private final String registry;
   private final OperationType type;

@@ -1,6 +1,6 @@
 package day8;
 
-enum OperationType {
+public enum OperationType {
   INC("inc") {
     @Override
     public int apply(int registerValue, int operationValue) {
