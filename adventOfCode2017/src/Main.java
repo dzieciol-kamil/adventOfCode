@@ -3,6 +3,7 @@ import day1.Day1;
 import day10.Day10;
 import day11.Day11;
 import day12.Day12;
+import day13.Day13;
 import day2.Day2;
 import day3.Day3;
 import day4.Day4;
@@ -21,6 +22,7 @@ import java.util.function.Supplier;
 public class Main {
 
   private static final List<AdventClass> adventClasses = Arrays.asList(
+      new Day13(),
       new Day12(),
       new Day11(),
       new Day10(),
