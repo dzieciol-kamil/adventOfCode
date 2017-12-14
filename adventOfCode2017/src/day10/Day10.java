@@ -28,7 +28,6 @@ public class Day10 implements AdventClass{
 
   @Override
   public String printSecond() {
-    String stringInput = "1,2,3";
     TyingKnotHashing hashing = new TyingKnotHashing(256);
     hash(hashing, INPUT_STRING);
     return "Knot hash value = " + hashing.getKnotHash();

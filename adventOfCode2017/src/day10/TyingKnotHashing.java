@@ -61,7 +61,7 @@ public class TyingKnotHashing {
 
   public String getKnotHash() {
     return String.join("", calculateXors().stream()
-                                          .map(Integer::toHexString)
+                                          .map(value -> String.format("%02X",value))
                                           .collect(Collectors.toList()));
   }
 
