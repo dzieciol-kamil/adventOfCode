@@ -5,6 +5,8 @@ import day11.Day11;
 import day12.Day12;
 import day13.Day13;
 import day14.Day14;
+import day15.Day15;
+import day16.Day16;
 import day2.Day2;
 import day3.Day3;
 import day4.Day4;
@@ -22,7 +24,11 @@ import java.util.function.Supplier;
 
 public class Main {
 
+  private static final boolean ALL = false;
+
   private static final List<AdventClass> adventClasses = Arrays.asList(
+      new Day16(),
+      new Day15(),
       new Day14(),
       new Day13(),
       new Day12(),
@@ -47,6 +53,8 @@ public class Main {
       System.out.println(getSolution(adventClass::printSecond));
       System.out.println();
       i--;
+      if (!ALL)
+        break;
     }
   }
 
