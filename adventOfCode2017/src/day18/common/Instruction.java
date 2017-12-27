@@ -51,13 +51,21 @@ public class Instruction {
     String[] split = s.split(" ");
     InstructionType type = InstructionType.of(split[0]);
     boolean registerValue = true;
-    Long intValue = -1l;
 
     Character registerWithValue = null;
+
+    long longValue = -1;
+    try {
+      longValue = Long.parseLong(split[1]);
+      registerValue = false;
+    } catch (NumberFormatException ignored) {
+      registerWithValue = split[1].charAt(0);
+    }
+
     if (split.length > 2) {
       registerWithValue = split[2].charAt(0);
       try {
-        intValue = Long.parseLong(split[2]);
+        longValue = Long.parseLong(split[2]);
         registerValue = false;
       } catch (NumberFormatException ignored) {
       }
@@ -68,7 +76,7 @@ public class Instruction {
                            split[1].charAt(0),
                            registerValue,
                            registerWithValue,
-                           intValue);
+                           longValue);
   }
 
   private static boolean isAlwaysOn(String s) {

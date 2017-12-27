@@ -14,6 +14,10 @@ import static org.junit.Assert.*;
 
 public class Day18 implements AdventClass{
 
+  //Wrong answers
+  //129538
+  //
+
   private final List<String> INPUT = Arrays.asList(Input.INPUT.split("\n"));
 
   @Override
@@ -52,8 +56,8 @@ public class Day18 implements AdventClass{
 
   @Test
   public void dualInterpreterTest() {
-    String testInputString = "snd a\n"
-                           + "snd a\n"
+    String testInputString = "snd 1\n"
+                           + "snd 2\n"
                            + "snd p\n"
                            + "rcv a\n"
                            + "rcv b\n"

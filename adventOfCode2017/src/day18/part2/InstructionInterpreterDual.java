@@ -52,9 +52,8 @@ public class InstructionInterpreterDual {
         break;
       case JUMP:
         jump(instruction);
-        return;
+        break;
     }
-    this.position++;
   }
 
   private void jump(Instruction instruction) {
@@ -65,34 +64,42 @@ public class InstructionInterpreterDual {
   }
 
   private void recive(Instruction instruction, Queue<Long> inQueue) {
-    if (!inQueue.isEmpty())
-      register.put(instruction.getRegister(), inQueue.poll());
-
     lock = inQueue.isEmpty();
+
+    if (inQueue.isEmpty())
+      return;
+
+    register.put(instruction.getRegister(), inQueue.poll());
+    this.position++;
   }
 
   private void modulo(Instruction instruction) {
     Long value = getFromRegister(instruction) % instruction.getValue(register);
     register.put(instruction.getRegister(), value);
+    this.position++;
   }
 
   private void multiply(Instruction instruction) {
     Long value = getFromRegister(instruction) * instruction.getValue(register);
     register.put(instruction.getRegister(), value);
+    this.position++;
   }
 
   private void add(Instruction instruction) {
     Long value = getFromRegister(instruction) + instruction.getValue(register);
     register.put(instruction.getRegister(), value);
+    this.position++;
   }
 
   private void send(Instruction instruction, Queue<Long> outQueue) {
-    outQueue.add(getFromRegister(instruction));
+    outQueue.add(instruction.getValue(register));
     sendCounter++;
+    this.position++;
   }
 
   private void set(Instruction instruction) {
     register.put(instruction.getRegister(), instruction.getValue(register));
+    this.position++;
   }
 
   private Long getFromRegister(Instruction instruction) {
