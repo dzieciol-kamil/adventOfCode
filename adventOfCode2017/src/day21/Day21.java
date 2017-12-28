@@ -11,11 +11,14 @@ public class Day21 implements AdventClass{
     Map<Grid, Grid> rules = Input.parseInput(Input.INPUT);
     ArtProgram artProgram = new ArtProgram(Input.startGrid(), rules);
     artProgram.art(5);
-    return "Pixels on = " + artProgram.pixelsOn();
+    return "Pixels on after 5 iterations = " + artProgram.pixelsOn();
   }
 
   @Override
   public String printSecond() {
-    return null;
+    Map<Grid, Grid> rules = Input.parseInput(Input.INPUT);
+    ArtProgram artProgram = new ArtProgram(Input.startGrid(), rules);
+    artProgram.art(18);
+    return "Pixels on after 18 iterations = " + artProgram.pixelsOn();
   }
 }

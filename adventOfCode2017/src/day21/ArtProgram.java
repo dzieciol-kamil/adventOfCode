@@ -2,6 +2,7 @@ package day21;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ArtProgram {
 
@@ -21,8 +22,10 @@ public class ArtProgram {
 
   private void art() {
     List<Grid> grids = grid.divide();
-    grids.forEach(dividedGrids -> dividedGrids.apply(rules));
-    grid = new Grid(grids);
+    List<Grid> enhancedGrids = grids.stream()
+                                    .map(dividedGrids -> dividedGrids.apply(rules))
+                                    .collect(Collectors.toList());
+    grid = new Grid(enhancedGrids);
   }
 
   public int pixelsOn() {

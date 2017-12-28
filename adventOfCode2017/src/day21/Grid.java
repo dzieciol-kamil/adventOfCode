@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Grid {
 
-  private Boolean[][] grid;
+  private final Boolean[][] grid;
 
   public Grid(Boolean[][] grid) {
     this.grid = grid;
@@ -14,28 +14,28 @@ public class Grid {
 
   public Grid(List<Grid> grids) {
     int size = (int) Math.sqrt(grids.size());
-    int newLength = grids.get(0).grid.length * size;
+    int gridPartLength = grids.get(0).grid.length;
+    int newLength = gridPartLength * size;
     Boolean[][] newGrid = new Boolean[newLength][newLength];
 
+    int listPosition = 0;
 
-    List<Grid> result = new ArrayList<>();
-    for (int i = 0; i < grid.length / size; i++) {
-      for (int j = 0; j < grid.length / size; j++) {
-        result.add(new Grid(breakGrid[i][j]));
+    for (int gridPosI = 0; gridPosI < size; gridPosI++) {
+      for (int gridPosJ = 0; gridPosJ < size; gridPosJ++) {
+        for (int i = 0; i < gridPartLength; i++) {
+          for (int j = 0; j < gridPartLength; j++) {
+            newGrid[gridPosI * gridPartLength + i][gridPosJ * gridPartLength + j] =
+                grids.get(listPosition).grid[i][j];
+          }
+        }
+        listPosition++;
       }
     }
+    grid = newGrid;
+  }
 
-    for (int i = 0; i < newLength; i++) {
-      for (int j = 0; j < newLength; j++) {
-        newGrid[i][j] = grids
-      }
-    }
-
-    newGrid[0][0] = grids.get(0).grid;
-    newGrid[0][1] = grids.get(1).grid;
-    newGrid[1][0] = grids.get(2).grid;
-    newGrid[1][1] = grids.get(3).grid;
-
+  public Boolean[][] getGrid() {
+    return grid;
   }
 
   public int pixelsOn() {
@@ -80,19 +80,48 @@ public class Grid {
     return result;
   }
 
-  public void apply(Map<Grid, Grid> rules) {
-
+  public Grid apply(Map<Grid, Grid> rules) {
+    for (Grid generatedGrid : new VariationGenerator().generate(this)) {
+      if (rules.containsKey(generatedGrid)) {
+        Grid grid = rules.get(generatedGrid);
+        return new Grid(grid.getGridCopy());
+      }
+    }
+    throw new RuntimeException("Should not happend");
   }
+
 
   @Override
   public String toString() {
-    StringBuilder result = new StringBuilder("\n");
+    StringBuilder result = new StringBuilder();
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[i].length; j++) {
         result.append(grid[i][j] ? "#" : ".");
       }
-      result.append("\n");
+      result.append("/");
     }
+    result.deleteCharAt(result.length()-1);
     return result.toString();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    return this.toString().equals(o.toString());
+  }
+
+  @Override
+  public int hashCode() {
+    return this.toString().hashCode();
+  }
+
+  public Boolean[][] getGridCopy() {
+    Boolean[][] copy = new Boolean[grid.length][];
+    for(int i = 0; i < grid.length; i++)
+      copy[i] = grid[i].clone();
+    return copy;
   }
 }
