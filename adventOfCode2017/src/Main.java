@@ -14,6 +14,7 @@ import day2.Day2;
 import day20.Day20;
 import day21.Day21;
 import day22.Day22;
+import day24.Day24;
 import day3.Day3;
 import day4.Day4;
 import day5.Day5;
@@ -33,6 +34,7 @@ public class Main {
   private static final boolean ALL = false;
 
   private static final List<AdventClass> adventClasses = Arrays.asList(
+      new Day24(),
       new Day22(),
       new Day21(),
       new Day20(),
