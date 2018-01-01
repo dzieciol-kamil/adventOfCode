@@ -18,4 +18,11 @@ public class RegisterValue implements InstructionValue {
   public void setValue(Map<Character, Long> registerMap, Long value) {
     registerMap.put(register, value);
   }
+
+  @Override
+  public String toString() {
+    return "RegisterValue{" +
+        "register=" + register +
+        '}';
+  }
 }

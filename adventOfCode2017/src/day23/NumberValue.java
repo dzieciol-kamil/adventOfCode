@@ -14,4 +14,11 @@ public class NumberValue implements InstructionValue {
   public Long getValue(Map<Character, Long> register) {
     return value;
   }
+
+  @Override
+  public String toString() {
+    return "NumberValue{" +
+        "value=" + value +
+        '}';
+  }
 }

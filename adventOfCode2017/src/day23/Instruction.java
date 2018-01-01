@@ -23,4 +23,13 @@ public class Instruction {
   public int multiplyCounterUpdate(int multiplyCount) {
     return type.equals(InstructionType.MULTIPLY) ? (multiplyCount += 1) : multiplyCount;
   }
+
+  @Override
+  public String toString() {
+    return "Instruction{" +
+        "type=" + type +
+        ", first=" + firstValue +
+        ", second=" + secondValue +
+        '}';
+  }
 }

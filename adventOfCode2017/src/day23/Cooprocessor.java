@@ -10,9 +10,8 @@ public class Cooprocessor {
   private final Map<Character, Long> register;
   private int actualPosition;
   private int multiplyCount;
-  private int count = 1;
 
-  public Cooprocessor(List<Instruction> instructions, Long aRegisterValue) {
+  public Cooprocessor(List<Instruction> instructions, Object aRegisterValue) {
     this.instructions = instructions;
     this.register = new HashMap() {{
       put('a', aRegisterValue);
@@ -38,27 +37,32 @@ public class Cooprocessor {
 
   public void run() {
     while (actualPosition >= 0 && actualPosition < instructions.size()) {
-      if (actualPosition == 21)
-        fixSecondLoop();
-      Instruction instruction = instructions.get(actualPosition);
-      multiplyCount = instruction.multiplyCounterUpdate(multiplyCount);
-      actualPosition = instruction.invoke(register, actualPosition);
+      if (actualPosition == 8) {
+        register.put('f', isPrime(register.get('b')) ? 1L : 0L);
+        actualPosition = 24;
+      }
+      runOneInstruction();
     }
   }
 
-  private void fixFirstLoop() {
-    register.put('e', register.get('e') - register.get('g'));
-    if (register.get('b') % 2 == 0)
-      register.put('f', 0l);
-    register.put('g', 0l);
+  private boolean isPrime(long n) {
+    if (n%2==0) return false;
+    for(int i=3;i*i<=n;i+=2) {
+      if(n%i==0)
+        return false;
+    }
+    return true;
   }
 
-  private void fixSecondLoop() {
-    register.put('d', register.get('b'));
-    printRegister(actualPosition);
+  public void runInDebug() {
+    while (actualPosition >= 0 && actualPosition < instructions.size()) {
+      runOneInstruction();
+    }
   }
 
-  private void printRegister(int lastPos) {
-    System.out.println(register + " pos " + (lastPos) + " count " + count++);
+  private void runOneInstruction() {
+    Instruction instruction = instructions.get(actualPosition);
+    multiplyCount = instruction.multiplyCounterUpdate(multiplyCount);
+    actualPosition = instruction.invoke(register, actualPosition);
   }
 }
