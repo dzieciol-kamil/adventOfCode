@@ -22,8 +22,7 @@ public class TuringMachine {
       NextMove nextMove = state.execute(list, position);
       nextStep = nextMove.getState();
       position = nextMove.getPosition();
-      if (i % 100_000 == 0)
-        System.out.println(i);
+
     }
   }
 

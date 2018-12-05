@@ -33,7 +33,7 @@ import java.util.function.Supplier;
 
 public class Main {
 
-  private static final boolean ALL = false;
+  private static final boolean ALL = true;
 
   private static final List<AdventClass> adventClasses = Arrays.asList(
       new Day25(),
