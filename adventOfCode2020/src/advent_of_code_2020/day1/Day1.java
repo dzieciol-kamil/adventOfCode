@@ -1,13 +1,13 @@
-package adventOfCode2020.day1;
+package advent_of_code_2020.day1;
 
-import adventOfCode2020.advent.AdventClass;
+import advent_of_code_2020.advent.AdventClass;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static adventOfCode2020.day1.Input.INPUT;
+import static advent_of_code_2020.day1.Input.INPUT;
 
 public class Day1 implements AdventClass {
 

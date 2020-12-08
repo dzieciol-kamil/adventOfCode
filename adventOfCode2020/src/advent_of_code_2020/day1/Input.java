@@ -1,4 +1,4 @@
-package adventOfCode2020.day1;
+package advent_of_code_2020.day1;
 
 public class Input {
 

@@ -1,8 +1,8 @@
-package adventOfCode2020;
+package advent_of_code_2020;
 
-import adventOfCode2020.advent.AdventClass;
-import adventOfCode2020.day1.Day1;
-import adventOfCode2020.day2.Day2;
+import advent_of_code_2020.advent.AdventClass;
+import advent_of_code_2020.day1.Day1;
+import advent_of_code_2020.day2.Day2;
 
 import java.time.Duration;
 import java.time.Instant;
